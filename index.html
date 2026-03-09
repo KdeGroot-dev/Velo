@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VELO — SaaS Growth Agency</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;700;900&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;cursor:none}
+
+:root{
+  --ink:    #0E0E11;
+  --deep:   #13131A;
+  --mid:    #1C1C26;
+  --lift:   #22222E;
+  --chalk:  #F0EFEA;
+  --ghost:  rgba(240,239,234,.36);
+  --rule:   rgba(240,239,234,.07);
+  --red:    #FF4D2E;
+  --indigo: #6B5CF5;
+  --gold:   #EFA400;
+  --teal:   #00BF88;
+}
+
+html{scroll-behavior:smooth}
+body{font-family:'Syne',sans-serif;background:var(--ink);color:var(--chalk);overflow-x:hidden}
+
+body::after{
+  content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='0.035'/%3E%3C/svg%3E");
+  background-size:200px;
+}
+
+/* ─ cursor ─ */
+#cd{width:7px;height:7px;border-radius:50%;background:var(--chalk);position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+#cr{width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(240,239,234,.25);position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .2s,height .2s}
+
+/* ─ progress ─ */
+#pb{position:fixed;top:0;left:0;height:2px;width:0%;background:var(--red);z-index:10000}
+
+/* ─ nav ─ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  padding:24px 56px;display:flex;justify-content:space-between;align-items:center;
+  background:linear-gradient(to bottom,rgba(14,14,17,.96) 0%,transparent 100%);
+}
+.nav-logo{font-family:'Unbounded',sans-serif;font-weight:900;font-size:16px;color:var(--chalk)}
+.nav-right{display:flex;align-items:center;gap:36px}
+.nav-link{font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--ghost);text-decoration:none;transition:color .2s}
+.nav-link:hover{color:var(--chalk)}
+.nav-cta{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--chalk);border:1.5px solid rgba(240,239,234,.2);padding:10px 22px;border-radius:100px;text-decoration:none;transition:border-color .2s,background .2s;white-space:nowrap}
+.nav-cta:hover{border-color:rgba(240,239,234,.55);background:rgba(240,239,234,.06)}
+
+/* ══════════════════════════════
+   HERO
+══════════════════════════════ */
+#hero{
+  background:var(--ink);min-height:100vh;
+  display:grid;grid-template-rows:1fr auto;
+  padding:0 56px 80px;position:relative;overflow:hidden;
+}
+.hero-glow-a{position:absolute;width:1000px;height:700px;border-radius:50%;background:radial-gradient(ellipse,rgba(107,92,245,.14) 0%,transparent 60%);top:-200px;right:-260px;pointer-events:none}
+.hero-glow-b{position:absolute;width:700px;height:600px;border-radius:50%;background:radial-gradient(ellipse,rgba(255,77,46,.09) 0%,transparent 60%);bottom:-100px;left:-180px;pointer-events:none}
+.hero-content{display:flex;align-items:flex-end;padding-top:160px;position:relative;z-index:1}
+.hero-left{flex:1}
+.hero-badge{display:inline-flex;align-items:center;gap:9px;font-size:10px;font-weight:700;letter-spacing:3.5px;text-transform:uppercase;color:var(--ghost);margin-bottom:40px;opacity:0;animation:fadeUp .6s ease .05s forwards}
+.badge-pip{width:6px;height:6px;border-radius:50%;background:var(--red);box-shadow:0 0 12px rgba(255,77,46,.6)}
+.hero-hl{font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(54px,9vw,144px);line-height:.86;color:var(--chalk)}
+.hero-hl .line{display:block;overflow:hidden}
+.hero-hl .word{display:inline-block;transform:translateY(108%);animation:wordReveal .82s cubic-bezier(.16,1,.3,1) forwards}
+.w1{animation-delay:.12s}.w2{animation-delay:.21s}.w3{animation-delay:.3s}.w4{animation-delay:.39s}.w5{animation-delay:.48s}
+.hero-hl .red{color:var(--red)}
+.hero-right{width:320px;padding-bottom:8px;padding-left:48px;flex-shrink:0;opacity:0;animation:fadeUp .7s ease .68s forwards}
+.hero-desc{font-size:15px;font-weight:500;color:var(--ghost);line-height:1.76;margin-bottom:32px}
+.hero-cta-row{display:flex;align-items:center;gap:20px}
+.hero-btn{display:inline-flex;align-items:center;gap:12px;background:var(--red);color:#fff;font-family:'Unbounded',sans-serif;font-weight:700;font-size:11px;letter-spacing:.5px;padding:15px 30px;border-radius:100px;text-decoration:none;box-shadow:0 0 32px rgba(255,77,46,.25);transition:transform .28s cubic-bezier(.16,1,.3,1),box-shadow .28s}
+.hero-btn:hover{transform:scale(1.04);box-shadow:0 0 48px rgba(255,77,46,.4)}
+.hero-ghost-link{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--ghost);text-decoration:none;border-bottom:1px solid rgba(240,239,234,.16);padding-bottom:2px;transition:color .2s,border-color .2s}
+.hero-ghost-link:hover{color:var(--chalk);border-color:rgba(240,239,234,.5)}
+.hero-bottom{display:flex;justify-content:space-between;align-items:flex-end;position:relative;z-index:1;padding-top:80px;border-top:1px solid var(--rule);opacity:0;animation:fadeUp .6s ease .85s forwards}
+.hero-stat-row{display:flex;gap:56px}
+.h-stat-n{font-family:'Unbounded',sans-serif;font-weight:900;font-size:28px;color:var(--chalk);line-height:1}
+.h-stat-l{font-size:11px;font-weight:500;color:var(--ghost);margin-top:4px}
+.hero-scroll{display:flex;align-items:center;gap:12px;font-size:10px;font-weight:700;letter-spacing:3.5px;text-transform:uppercase;color:var(--ghost)}
+.sline{width:48px;height:1px;background:rgba(240,239,234,.08);position:relative;overflow:hidden}
+.sline::after{content:'';position:absolute;left:-100%;top:0;width:100%;height:100%;background:var(--ghost);animation:lineScroll 2s ease-in-out infinite}
+
+/* ─ marquee ─ */
+.mstrip{padding:14px 0;overflow:hidden;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.mtrack{display:flex;white-space:nowrap;animation:marquee 26s linear infinite}
+.mtrack.rev{animation:marqueeRev 26s linear infinite}
+.mitem{font-family:'Unbounded',sans-serif;font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--ghost);padding:0 26px;flex-shrink:0;display:flex;align-items:center;gap:26px}
+.dot{width:4px;height:4px;border-radius:50%;background:currentColor;opacity:.3;flex-shrink:0}
+
+/* ─ clients ─ */
+#clients{background:var(--deep);padding:60px 56px;border-bottom:1px solid var(--rule)}
+.clients-label{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--ghost);margin-bottom:28px;text-align:center}
+.logos{display:flex;justify-content:center;align-items:center;gap:48px;flex-wrap:wrap}
+.logo-name{font-family:'Unbounded',sans-serif;font-weight:700;font-size:12px;letter-spacing:.3px;color:rgba(240,239,234,.13);transition:color .25s}
+.logo-name:hover{color:rgba(240,239,234,.45)}
+
+/* ══════════════════════════════
+   SERVICES — lifted bg, colored numbers
+══════════════════════════════ */
+#services{background:var(--mid);padding:120px 56px 130px;border-bottom:1px solid var(--rule)}
+.sec-eyebrow{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--ghost);margin-bottom:48px}
+.svc-header{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end;margin-bottom:0}
+.svc-title{font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(26px,3.5vw,50px);line-height:1.06;color:var(--chalk)}
+.svc-intro{font-size:15px;font-weight:500;color:var(--ghost);line-height:1.75;align-self:end}
+
+/* service cards — replaced flat list with card grid */
+.svc-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--rule);margin-top:72px;border:1px solid var(--rule);border-radius:16px;overflow:hidden}
+.svc-card{
+  background:var(--mid);padding:36px 28px;
+  display:flex;flex-direction:column;gap:0;
+  transition:background .25s;position:relative;overflow:hidden;
+}
+.svc-card::before{
+  content:'';position:absolute;inset:0;opacity:0;
+  transition:opacity .3s;
+}
+.svc-card:hover{background:var(--lift)}
+.svc-card:hover .svc-card-num{opacity:1}
+.svc-card:hover .svc-card-arrow{opacity:1;transform:translate(0,0)}
+.svc-card-num{
+  font-family:'Unbounded',sans-serif;font-weight:900;
+  font-size:40px;line-height:1;margin-bottom:28px;
+  opacity:.22;transition:opacity .3s;
+}
+.n1{color:var(--red)}
+.n2{color:var(--indigo)}
+.n3{color:var(--gold)}
+.n4{color:var(--teal)}
+.n5{color:var(--red)}
+.svc-card-name{font-family:'Unbounded',sans-serif;font-weight:700;font-size:14px;color:var(--chalk);line-height:1.35;margin-bottom:14px}
+.svc-card-desc{font-size:12px;font-weight:500;color:var(--ghost);line-height:1.7;flex:1}
+.svc-card-arrow{
+  font-size:18px;color:var(--red);margin-top:24px;
+  opacity:0;transform:translate(-8px,4px);
+  transition:all .22s cubic-bezier(.16,1,.3,1);
+  align-self:flex-start;
+}
+
+/* ══════════════════════════════
+   WORK — 3-col even grid, sensible heights
+══════════════════════════════ */
+#work{background:var(--ink);padding:120px 56px 130px}
+.work-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px}
+.work-title{font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(32px,5vw,74px);line-height:.9;color:var(--chalk)}
+.see-all{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--ghost);text-decoration:none;border-bottom:1px solid rgba(240,239,234,.16);padding-bottom:2px;align-self:flex-end;white-space:nowrap;transition:color .2s,border-color .2s}
+.see-all:hover{color:var(--chalk);border-color:var(--chalk)}
+
+/* top row: two equal cards */
+.work-row-top{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+/* bottom row: three equal cards */
+.work-row-bot{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+
+.wcard{
+  border-radius:14px;overflow:hidden;position:relative;
+  background:var(--mid);border:1px solid var(--rule);
+  opacity:0;transform:translateY(28px);
+}
+.wcard.visible{opacity:1;transform:translateY(0);transition:opacity .6s ease,transform .6s ease}
+.wcard-tall{aspect-ratio:16/10}
+.wcard-short{aspect-ratio:16/9}
+
+.wcard-bg{position:absolute;inset:0;z-index:0;transition:transform .55s cubic-bezier(.16,1,.3,1)}
+.wcard:hover .wcard-bg{transform:scale(1.04)}
+.bg-a{background:linear-gradient(145deg,#0d0030 0%,#4a38d4 50%,#8855e0 100%)}
+.bg-b{background:linear-gradient(145deg,#001020 0%,#0055b8 50%,#00b0c8 100%)}
+.bg-c{background:linear-gradient(145deg,#1a0800 0%,#c83018 50%,#e89000 100%)}
+.bg-d{background:linear-gradient(145deg,#001810 0%,#007848 50%,#00b87a 100%)}
+.bg-e{background:linear-gradient(145deg,#180010 0%,#8800aa 50%,#dd3388 100%)}
+
+.wcard-inner{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;padding:24px 26px;background:linear-gradient(to top,rgba(0,0,0,.72) 0%,transparent 52%)}
+.wcard-cat{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.42);margin-bottom:5px}
+.wcard-name{font-family:'Unbounded',sans-serif;font-weight:700;font-size:16px;color:#fff;line-height:1.3}
+
+/* stagger delays */
+.work-row-top .wcard:nth-child(2).visible{transition-delay:.08s}
+.work-row-bot .wcard:nth-child(1).visible{transition-delay:.14s}
+.work-row-bot .wcard:nth-child(2).visible{transition-delay:.22s}
+.work-row-bot .wcard:nth-child(3).visible{transition-delay:.3s}
+
+/* ══════════════════════════════
+   QUOTE
+══════════════════════════════ */
+#quote{background:var(--deep);padding:110px 56px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.quote-glow{position:absolute;width:700px;height:500px;border-radius:50%;background:radial-gradient(ellipse,rgba(107,92,245,.12) 0%,transparent 65%);top:-80px;left:50%;transform:translateX(-50%);pointer-events:none}
+.quote-inner{position:relative;z-index:1;max-width:860px;margin:0 auto;text-align:center}
+.quote-mark{font-family:'Unbounded',sans-serif;font-weight:900;font-size:80px;line-height:.7;color:var(--red);opacity:.2;margin-bottom:20px;user-select:none}
+.quote-text{font-family:'Unbounded',sans-serif;font-weight:700;font-size:clamp(18px,2.6vw,34px);line-height:1.35;color:var(--chalk);margin-bottom:32px}
+.quote-attr{display:flex;align-items:center;justify-content:center;gap:14px}
+.quote-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--indigo),var(--red));flex-shrink:0}
+.quote-name{font-size:13px;font-weight:700;color:var(--chalk);text-align:left}
+.quote-role{font-size:11px;font-weight:500;color:var(--ghost);text-align:left}
+
+/* ══════════════════════════════
+   STATS — borderless, big numbers
+══════════════════════════════ */
+#stats{background:var(--mid);padding:120px 56px 130px;border-bottom:1px solid var(--rule)}
+.stats-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:72px}
+.stats-hl{font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(26px,3.5vw,50px);line-height:1.06;color:var(--chalk);max-width:500px}
+.stats-hl .ac{color:var(--gold)}
+.stats-sub{font-size:14px;font-weight:500;color:var(--ghost);max-width:260px;line-height:1.72;align-self:flex-end}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.stat{padding:40px 36px;border-right:1px solid var(--rule);opacity:0;transform:translateY(20px)}
+.stat:first-child{border-left:1px solid var(--rule)}
+.stat.visible{opacity:1;transform:translateY(0);transition:opacity .55s ease,transform .55s ease}
+.stat:nth-child(2).visible{transition-delay:.1s}
+.stat:nth-child(3).visible{transition-delay:.18s}
+.stat:nth-child(4).visible{transition-delay:.26s}
+.stat-n{font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(36px,4vw,60px);line-height:1;margin-bottom:10px}
+.c1{color:var(--red)}.c2{color:var(--indigo)}.c3{color:var(--gold)}.c4{color:var(--teal)}
+.stat-l{font-size:12px;font-weight:500;color:var(--ghost);line-height:1.55}
+
+/* ══════════════════════════════
+   PROCESS
+══════════════════════════════ */
+#process{background:var(--ink);padding:120px 56px 130px;border-bottom:1px solid var(--rule)}
+.proc-header{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end;margin-bottom:64px}
+.proc-title{font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(26px,3.5vw,50px);line-height:1.06;color:var(--chalk)}
+.proc-intro{font-size:15px;font-weight:500;color:var(--ghost);line-height:1.75}
+.proc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule)}
+.proc-step{background:var(--ink);padding:44px 40px;opacity:0;transform:translateY(20px)}
+.proc-step.visible{opacity:1;transform:translateY(0);transition:opacity .6s ease,transform .6s ease}
+.proc-step:nth-child(2).visible{transition-delay:.14s}
+.proc-step:nth-child(3).visible{transition-delay:.26s}
+.proc-n{font-family:'Unbounded',sans-serif;font-weight:900;font-size:60px;line-height:1;color:transparent;-webkit-text-stroke:1.5px rgba(240,239,234,.08);margin-bottom:20px}
+.proc-name{font-family:'Unbounded',sans-serif;font-weight:700;font-size:18px;color:var(--chalk);margin-bottom:12px}
+.proc-desc{font-size:14px;font-weight:400;color:var(--ghost);line-height:1.78}
+
+/* ══════════════════════════════
+   CTA — deep dark with rich indigo glow
+   no white flip, stays in the dark universe
+══════════════════════════════ */
+#cta{
+  background:var(--deep);
+  padding:150px 56px 130px;
+  text-align:center;position:relative;overflow:hidden;
+  border-top:1px solid var(--rule);
+}
+/* richer background: layered radial glows */
+.cta-glow-a{position:absolute;width:900px;height:700px;border-radius:50%;background:radial-gradient(ellipse,rgba(107,92,245,.18) 0%,transparent 62%);top:50%;left:50%;transform:translate(-50%,-55%);pointer-events:none;animation:ctaDrift 7s ease-in-out infinite alternate}
+.cta-glow-b{position:absolute;width:600px;height:500px;border-radius:50%;background:radial-gradient(ellipse,rgba(255,77,46,.11) 0%,transparent 62%);top:60%;left:50%;transform:translate(-50%,-50%);pointer-events:none;animation:ctaDrift 7s ease-in-out infinite alternate-reverse}
+.cta-inner{position:relative;z-index:1}
+.cta-pre{font-size:10px;font-weight:700;letter-spacing:5px;text-transform:uppercase;color:var(--ghost);margin-bottom:28px;display:flex;align-items:center;justify-content:center;gap:14px}
+.cta-pre::before,.cta-pre::after{content:'';width:36px;height:1px;background:var(--rule)}
+.cta-hl{font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(40px,7.5vw,118px);line-height:.88;color:var(--chalk);margin-bottom:20px}
+.cta-hl .red{color:var(--red)}
+.cta-sub{font-size:15px;font-weight:500;color:var(--ghost);margin-bottom:52px;max-width:400px;margin-left:auto;margin-right:auto;line-height:1.7}
+.cta-btn{
+  display:inline-flex;align-items:center;gap:14px;
+  background:var(--red);color:#fff;
+  font-family:'Unbounded',sans-serif;font-weight:700;font-size:12px;letter-spacing:.4px;
+  padding:19px 44px;border-radius:100px;text-decoration:none;
+  box-shadow:0 0 48px rgba(255,77,46,.28);
+  transition:transform .28s cubic-bezier(.16,1,.3,1),gap .28s,box-shadow .28s;
+}
+.cta-btn:hover{transform:scale(1.04);gap:22px;box-shadow:0 0 72px rgba(255,77,46,.45)}
+
+/* ─ footer ─ */
+footer{background:var(--ink);padding:44px 56px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;border-top:1px solid var(--rule)}
+.f-logo{font-family:'Unbounded',sans-serif;font-weight:900;font-size:16px;color:var(--chalk)}
+.f-links{display:flex;gap:32px;justify-content:center}
+.f-link{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--ghost);text-decoration:none;transition:color .2s}
+.f-link:hover{color:var(--chalk)}
+.f-copy{font-size:11px;color:rgba(240,239,234,.15);text-align:right}
+
+/* ─ keyframes ─ */
+@keyframes wordReveal{to{transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes marqueeRev{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
+@keyframes lineScroll{0%{left:-100%}100%{left:100%}}
+@keyframes ctaDrift{from{transform:translate(-50%,-55%) scale(.92)}to{transform:translate(-50%,-50%) scale(1.08)}}
+
+/* ─ mobile ─ */
+@media(max-width:900px){
+  nav{padding:20px 24px}
+  .nav-right .nav-link{display:none}
+  #hero,#services,#work,#quote,#stats,#process,#cta{padding-left:24px;padding-right:24px}
+  #clients,footer{padding-left:24px;padding-right:24px}
+  .hero-content{flex-direction:column;align-items:flex-start;gap:32px;padding-top:120px}
+  .hero-right{width:100%;padding-left:0}
+  .hero-stat-row{gap:28px}
+  .h-stat-n{font-size:22px}
+  .svc-header,.proc-header{grid-template-columns:1fr}
+  .svc-grid{grid-template-columns:1fr 1fr;border-radius:12px}
+  .svc-grid .svc-card:last-child{grid-column:span 2}
+  .work-row-top,.work-row-bot{grid-template-columns:1fr}
+  .wcard-tall,.wcard-short{aspect-ratio:4/3}
+  .stats-top{flex-direction:column;gap:20px;align-items:flex-start}
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .stat{border-left:1px solid var(--rule)}
+  .proc-grid{grid-template-columns:1fr}
+  footer{grid-template-columns:1fr;gap:22px}
+  .f-copy,.f-links{text-align:left;justify-content:flex-start}
+}
+@media(max-width:480px){
+  .svc-grid{grid-template-columns:1fr}
+  .svc-grid .svc-card:last-child{grid-column:auto}
+  .stats-row{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="cd"></div>
+<div id="cr"></div>
+<div id="pb"></div>
+
+<nav>
+  <div class="nav-logo">VELO</div>
+  <div class="nav-right">
+    <a href="#services" class="nav-link">Services</a>
+    <a href="#work"     class="nav-link">Work</a>
+    <a href="#process"  class="nav-link">Process</a>
+    <a href="#cta"      class="nav-cta">Let's Talk</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow-a"></div>
+  <div class="hero-glow-b"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <p class="hero-badge"><span class="badge-pip"></span>SaaS Growth Agency</p>
+      <h1 class="hero-hl">
+        <span class="line"><span class="word w1">WE</span></span>
+        <span class="line"><span class="word w2">BUILD</span></span>
+        <span class="line"><span class="word w3"><span class="red">GROWTH</span></span></span>
+        <span class="line"><span class="word w4">MA</span><span class="word w5">CHINES.</span></span>
+      </h1>
+    </div>
+    <div class="hero-right">
+      <p class="hero-desc">We take ambitious SaaS companies from traction to scale. Product-led, data-driven, relentlessly creative.</p>
+      <div class="hero-cta-row">
+        <a href="#cta" class="hero-btn">Start a Project →</a>
+        <a href="#work" class="hero-ghost-link">See Work</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-stat-row">
+      <div><div class="h-stat-n">120+</div><div class="h-stat-l">Companies Scaled</div></div>
+      <div><div class="h-stat-n">$380M</div><div class="h-stat-l">ARR Generated</div></div>
+      <div><div class="h-stat-n">94%</div><div class="h-stat-l">Retention Rate</div></div>
+    </div>
+    <div class="hero-scroll"><div class="sline"></div>Scroll</div>
+  </div>
+</section>
+
+<!-- MARQUEE 1 -->
+<div class="mstrip">
+  <div class="mtrack">
+    <span class="mitem">Product-Led Growth<span class="dot"></span></span>
+    <span class="mitem">Conversion Optimization<span class="dot"></span></span>
+    <span class="mitem">Brand Strategy<span class="dot"></span></span>
+    <span class="mitem">Pipeline Acceleration<span class="dot"></span></span>
+    <span class="mitem">UX &amp; Web Design<span class="dot"></span></span>
+    <span class="mitem">Revenue Architecture<span class="dot"></span></span>
+    <span class="mitem">Product-Led Growth<span class="dot"></span></span>
+    <span class="mitem">Conversion Optimization<span class="dot"></span></span>
+    <span class="mitem">Brand Strategy<span class="dot"></span></span>
+    <span class="mitem">Pipeline Acceleration<span class="dot"></span></span>
+    <span class="mitem">UX &amp; Web Design<span class="dot"></span></span>
+    <span class="mitem">Revenue Architecture<span class="dot"></span></span>
+  </div>
+</div>
+
+<!-- CLIENTS -->
+<section id="clients">
+  <p class="clients-label">Trusted by teams building the future</p>
+  <div class="logos">
+    <span class="logo-name">Notion</span>
+    <span class="logo-name">Linear</span>
+    <span class="logo-name">Vercel</span>
+    <span class="logo-name">Loom</span>
+    <span class="logo-name">Figma</span>
+    <span class="logo-name">Stripe</span>
+    <span class="logo-name">Intercom</span>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <p class="sec-eyebrow">What We Do</p>
+  <div class="svc-header">
+    <h2 class="svc-title">Everything your SaaS needs to break through.</h2>
+    <p class="svc-intro">From initial positioning to full-scale pipeline, we architect every layer of your growth. No generalists. No guesswork.</p>
+  </div>
+  <div class="svc-grid">
+    <div class="svc-card">
+      <div class="svc-card-num n1">01</div>
+      <div class="svc-card-name">Growth Strategy</div>
+      <div class="svc-card-desc">Full-funnel growth roadmaps built for SaaS — from seed to Series B and beyond.</div>
+      <div class="svc-card-arrow">→</div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-card-num n2">02</div>
+      <div class="svc-card-name">Brand &amp; Identity</div>
+      <div class="svc-card-desc">Positioning, messaging, and visual identity that makes you impossible to ignore.</div>
+      <div class="svc-card-arrow">→</div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-card-num n3">03</div>
+      <div class="svc-card-name">Web Design &amp; Dev</div>
+      <div class="svc-card-desc">High-converting websites built fast — no templates, no compromises.</div>
+      <div class="svc-card-arrow">→</div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-card-num n4">04</div>
+      <div class="svc-card-name">Demand Generation</div>
+      <div class="svc-card-desc">Multi-channel pipelines that compound. Outbound, content, paid — all working together.</div>
+      <div class="svc-card-arrow">→</div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-card-num n5">05</div>
+      <div class="svc-card-name">Product Marketing</div>
+      <div class="svc-card-desc">Launch strategy, onboarding flows, and retention plays that turn trials into advocates.</div>
+      <div class="svc-card-arrow">→</div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="work-header">
+    <h2 class="work-title">Selected<br>Work</h2>
+    <a href="#" class="see-all">View All Cases →</a>
+  </div>
+  <div class="work-row-top">
+    <div class="wcard wcard-tall"><div class="wcard-bg bg-a"></div><div class="wcard-inner"><p class="wcard-cat">SaaS · Growth Strategy</p><p class="wcard-name">3× revenue in 8 months</p></div></div>
+    <div class="wcard wcard-tall"><div class="wcard-bg bg-b"></div><div class="wcard-inner"><p class="wcard-cat">Fintech · Brand &amp; Web</p><p class="wcard-name">Series A → B in 12 months</p></div></div>
+  </div>
+  <div class="work-row-bot">
+    <div class="wcard wcard-short"><div class="wcard-bg bg-c"></div><div class="wcard-inner"><p class="wcard-cat">DevTools · Demand Gen</p><p class="wcard-name">$0 to 50K users, zero paid</p></div></div>
+    <div class="wcard wcard-short"><div class="wcard-bg bg-d"></div><div class="wcard-inner"><p class="wcard-cat">HR Tech · Full Funnel</p><p class="wcard-name">40% lower CAC, 2× LTV</p></div></div>
+    <div class="wcard wcard-short"><div class="wcard-bg bg-e"></div><div class="wcard-inner"><p class="wcard-cat">MarTech · Relaunch</p><p class="wcard-name">180% pipeline in 90 days</p></div></div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section id="quote">
+  <div class="quote-glow"></div>
+  <div class="quote-inner">
+    <div class="quote-mark">"</div>
+    <p class="quote-text">"VELO didn't just run our growth — they rebuilt how we think about it. ARR doubled in six months."</p>
+    <div class="quote-attr">
+      <div class="quote-avatar"></div>
+      <div>
+        <div class="quote-name">Marcus Reid</div>
+        <div class="quote-role">CEO, Archetype (Series B)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE 2 -->
+<div class="mstrip">
+  <div class="mtrack rev">
+    <span class="mitem">120+ SaaS Companies Scaled<span class="dot"></span></span>
+    <span class="mitem">$380M in ARR Generated<span class="dot"></span></span>
+    <span class="mitem">94% Client Retention<span class="dot"></span></span>
+    <span class="mitem">2.8× Avg First-Year Growth<span class="dot"></span></span>
+    <span class="mitem">120+ SaaS Companies Scaled<span class="dot"></span></span>
+    <span class="mitem">$380M in ARR Generated<span class="dot"></span></span>
+    <span class="mitem">94% Client Retention<span class="dot"></span></span>
+    <span class="mitem">2.8× Avg First-Year Growth<span class="dot"></span></span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-top">
+    <h2 class="stats-hl">Numbers that <span class="ac">actually</span><br>matter to founders.</h2>
+    <p class="stats-sub">We measure what moves the needle — ARR, retention, payback period. Not vanity metrics.</p>
+  </div>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-n c1" data-target="120" data-fmt="n+">0</div><p class="stat-l">SaaS companies scaled</p></div>
+    <div class="stat"><div class="stat-n c2" data-target="380" data-fmt="$nM">$0M</div><p class="stat-l">In ARR generated</p></div>
+    <div class="stat"><div class="stat-n c3" data-target="94"  data-fmt="n%">0%</div><p class="stat-l">Client retention rate</p></div>
+    <div class="stat"><div class="stat-n c4" data-target="2.8" data-fmt="n×" data-dec="1">0×</div><p class="stat-l">Avg ARR growth, year one</p></div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="proc-header">
+    <h2 class="proc-title">Fast to deploy.<br>Built to last.</h2>
+    <p class="proc-intro">We move in focused sprints, not 90-day strategies that gather dust. Every engagement is built for momentum.</p>
+  </div>
+  <div class="proc-grid">
+    <div class="proc-step"><div class="proc-n">01</div><div class="proc-name">Diagnose</div><p class="proc-desc">We audit your funnel, positioning, and product to pinpoint the exact levers that unlock your next growth phase.</p></div>
+    <div class="proc-step"><div class="proc-n">02</div><div class="proc-name">Architect</div><p class="proc-desc">We build your full growth system — messaging, channels, assets, sequences — engineered around your motion.</p></div>
+    <div class="proc-step"><div class="proc-n">03</div><div class="proc-name">Accelerate</div><p class="proc-desc">We launch, learn, and iterate in sprints. Every week brings new signals. Every month brings compounding results.</p></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-glow-a"></div>
+  <div class="cta-glow-b"></div>
+  <div class="cta-inner">
+    <p class="cta-pre">Ready when you are</p>
+    <h2 class="cta-hl">Let's build<br>your <span class="red">future.</span></h2>
+    <p class="cta-sub">Tell us where you are. We'll show you exactly where you can go.</p>
+    <a href="mailto:hello@velo.agency" class="cta-btn">Start a Conversation →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">VELO</div>
+  <div class="f-links">
+    <a href="#" class="f-link">Work</a>
+    <a href="#" class="f-link">Services</a>
+    <a href="#" class="f-link">About</a>
+    <a href="#" class="f-link">Contact</a>
+  </div>
+  <p class="f-copy">© 2025 VELO Agency</p>
+</footer>
+
+<script>
+const cd=document.getElementById('cd'),cr=document.getElementById('cr');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cd.style.left=mx+'px';cd.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(loop);})();
+document.querySelectorAll('a,button,.svc-card,.wcard').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cr.style.width='58px';cr.style.height='58px';});
+  el.addEventListener('mouseleave',()=>{cr.style.width='36px';cr.style.height='36px';});
+});
+
+const pb=document.getElementById('pb');
+window.addEventListener('scroll',()=>{pb.style.width=(window.scrollY/(document.body.scrollHeight-innerHeight)*100)+'%';});
+
+const revObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.1});
+document.querySelectorAll('.wcard,.stat,.proc-step').forEach(el=>revObs.observe(el));
+
+new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting&&!e.target._done){e.target._done=true;e.target.querySelectorAll('[data-target]').forEach(countUp);}});
+},{threshold:.3}).observe(document.getElementById('stats'));
+
+function countUp(el){
+  const target=parseFloat(el.dataset.target),fmt=el.dataset.fmt,dec=parseInt(el.dataset.dec||'0');
+  const dur=1600,t0=performance.now();
+  (function render(now){
+    const p=Math.min((now-t0)/dur,1),v=target*(1-Math.pow(1-p,3));
+    el.textContent=fmt.replace('n',dec?v.toFixed(dec):Math.round(v));
+    if(p<1)requestAnimationFrame(render);
+  })(performance.now());
+}
+</script>
+</body>
+</html>
